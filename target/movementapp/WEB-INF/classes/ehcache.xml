@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" dynamicConfig="false" >
+	<diskStore path="java.io.tmpdir"/>
+    <defaultCache
+        eternal="true"
+        maxElementsInMemory="100"
+        overflowToDisk="false" >
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
+            properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,replicateUpdatesViaCopy= false, replicateRemovals= true " />
+	</defaultCache>
+    <cache
+        name="org.hibernate.cache.StandardQueryCache"
+        eternal="false"
+        maxElementsInMemory="200"
+        timeToLiveSeconds="120">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
+            properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,replicateUpdatesViaCopy= false, replicateRemovals= true " />
+	</cache>
+    <cache
+        name="org.hibernate.cache.UpdateTimestampsCache"
+        eternal="true"
+        maxElementsInMemory="5000">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
+            properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,replicateUpdatesViaCopy= false, replicateRemovals= true " /> 
+        
+    </cache>
+    <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=manual,rmiUrls=//127.0.0.1:40002/org.hibernate.cache.UpdateTimestampsCache|//127.0.0.1:40002/org.hibernate.cache.StandardQueryCache" />
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="hostName=127.0.0.1, port=40001,socketTimeoutMillis=2000" />
+</ehcache>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition name="commonPage">
+    	<put-attribute name="top" value="/WEB-INF/jsp/top.jsp" />
+    	<put-attribute name="jsFile" value="/WEB-INF/jsp/jsPath.jsp" />
+    </definition>
+
+    <definition name="index" extends="commonPage" template="/WEB-INF/jsp/index.jsp">
+		<put-attribute name="title" value="淘吃客 - 首页" />
+    </definition>
+
+	<definition name="infoManager" extends="commonPage" template="/WEB-INF/jsp/infoManager.jsp">
+		<put-attribute name="title" value="淘吃客 - 餐厅设置" />
+    </definition>
+    
+    <definition name="recipeManager" extends="commonPage" template="/WEB-INF/jsp/recipeManager.jsp">
+		<put-attribute name="title" value="淘吃客 - 菜品管理" />
+    </definition>
+    
+    <definition name="desksManager" extends="commonPage" template="/WEB-INF/jsp/desksManager.jsp">
+		<put-attribute name="title" value="淘吃客 - 餐桌管理" />
+    </definition>
+    
+    <definition name="orderManager" extends="commonPage" template="/WEB-INF/jsp/orderManager.jsp">
+		<put-attribute name="title" value="淘吃客 - 订单管理" />
+    </definition>
+    
+    <definition name="waiterManager" extends="commonPage" template="/WEB-INF/jsp/waiterManager.jsp">
+		<put-attribute name="title" value="淘吃客 - 服务员管理" />
+    </definition>
+</tiles-definitions>

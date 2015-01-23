@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-11-27 16:53:06 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.movement.bussiness.User" table="user" lazy="false">
+        <cache usage="read-write" region="org.hibernate.cache.StandardQueryCache" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="45"/>
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="45"/>
+        </property>
+        <property name="access_token" type="string">
+            <column name="access_token" length="128" />
+        </property>   
+        <property name="expires_in" type="timestamp">
+            <column name="expires_in" length="19" />
+        </property>  
+        <property name="sns_type" type="java.lang.Integer">
+            <column name="sns_type" />
+        </property>  
+        <property name="alias" type="string">
+            <column name="alias" length="45"/>
+        </property>   
+        <property name="sex" type="string">
+            <column name="sex" length="45"/>
+        </property>
+        <property name="age" type="java.lang.Integer">
+            <column name="age" />
+        </property>
+        <property name="phone_number" type="string">
+            <column name="phone_number" length="45"/>
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="100" />
+        </property>
+        <property name="thumbnail" type="string">
+            <column name="thumbnail" length="256" />
+        </property>
+        <property name="openid" type="string">
+            <column name="open_id" length="45" />
+        </property>
+        <property name="refreshtoken" type="string">
+            <column name="refresh_token" length="128" />
+        </property>
+        
+        <bag name="events" table="user_event" inverse="true" lazy="true" fetch="select"  order-by="id desc">
+            <key>
+                <column name="user" />
+            </key>
+            <one-to-many class="com.movement.bussiness.UserEvent" />
+        </bag>
+        <bag name="activities" table="user_activity" inverse="true" lazy="true" fetch="select"  order-by="id desc">
+            <key>
+                <column name="user" />
+            </key>
+            <one-to-many class="com.movement.bussiness.UserActivity" />
+        </bag>
+        <bag name="teams" table="user_team" inverse="true" lazy="true" fetch="select"  order-by="id desc">
+            <key>
+                <column name="user" />
+            </key>
+            <one-to-many class="com.movement.bussiness.UserTeam" />
+        </bag>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+    </class>
+</hibernate-mapping>

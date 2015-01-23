@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.useUnicode">true</property>
+        <property name="hibernate.connection.characterEncoding">UTF-8</property>
+	    <property name="hibernate.show_sql">true</property>
+	    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+        <property name="hibernate.connection.isolation">2</property>
+        
+        <!-- 定义二级缓存 -->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		
+		<!-- 二级缓存使用的存储,ehcache或memcached -->
+		<!-- <property name="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</property> -->
+		<property name="net.sf.ehcache.configurationResourceName">ehcache.xml</property> 
+   		<property name="hibernate.cache.region.factory_class"> net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory </property>
+
+ 
+        <mapping resource="com/movement/bussiness/News.hbm.xml" />
+        <mapping resource="com/movement/bussiness/SportsEvent.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Team.hbm.xml" />
+        <mapping resource="com/movement/bussiness/TeamAttachment.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Activity.hbm.xml" />
+        <mapping resource="com/movement/bussiness/ActivityAttachment.hbm.xml" />
+        <mapping resource="com/movement/bussiness/User.hbm.xml" />
+        <mapping resource="com/movement/bussiness/UserEvent.hbm.xml" />
+        <mapping resource="com/movement/bussiness/UserActivity.hbm.xml" />
+        <mapping resource="com/movement/bussiness/UserTeam.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Achievement.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Course.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Competition.hbm.xml" />
+        <mapping resource="com/movement/bussiness/CompetitionLevel.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Game.hbm.xml" />
+        <mapping resource="com/movement/bussiness/GameRecord.hbm.xml" />
+        <mapping resource="com/movement/bussiness/GameAttachment.hbm.xml" />
+        <mapping resource="com/movement/bussiness/CompetitionTeam.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Site.hbm.xml" />
+        <mapping resource="com/movement/bussiness/Unit.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

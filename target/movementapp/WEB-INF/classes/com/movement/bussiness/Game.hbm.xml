@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-11-27 16:53:06 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.movement.bussiness.Game" table="games" lazy="false">
+        <cache usage="read-write" region="org.hibernate.cache.StandardQueryCache" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="competition" class="com.movement.bussiness.Competition">
+            <column name="competition" />
+        </many-to-one> 
+        <many-to-one name="level" class="com.movement.bussiness.CompetitionLevel">
+            <column name="level" />
+        </many-to-one> 
+        <bag name="records" table="game_record" inverse="true" lazy="true" fetch="select"  order-by="id desc">
+            <key>
+                <column name="game" />
+            </key>
+            <one-to-many class="com.movement.bussiness.GameRecord" />
+        </bag>
+        <bag name="attachments" table="game_attachment" inverse="true" lazy="true" fetch="select"  order-by="id desc">
+            <key>
+                <column name="game" />
+            </key>
+            <one-to-many class="com.movement.bussiness.GameAttachment" />
+        </bag>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+    </class>
+</hibernate-mapping>
