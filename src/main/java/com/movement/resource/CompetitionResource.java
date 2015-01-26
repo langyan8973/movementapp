@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.movement.bussiness.Competition;
 import com.movement.bussiness.CompetitionTeam;
+import com.movement.bussiness.Game;
 import com.movement.service.CompetitionService;
 import com.sun.jersey.api.core.ResourceContext;
 import com.sun.jersey.multipart.FormDataParam;
@@ -61,6 +62,33 @@ public class CompetitionResource {
 	}
 	
 	@POST
+	@Path("/edit")
+	@Consumes("application/json")
+	public Response edit(Competition competition1){
+		
+		competition.setAddress(competition1.getAddress());
+		
+		competition.setDescription(competition1.getDescription());
+		
+		competition.setEvent(competition1.getEvent());
+		
+		competition.setSite(competition1.getSite());
+		
+		competition.setSponsor(competition1.getSponsor());
+		
+		competition.setStatus(competition1.getStatus());
+		
+		competition.setTime(competition1.getTime());
+		
+		competition.setTitle(competition1.getTitle());
+		
+		service.saveOrUpdate(competition);
+		
+		return Response.created(URI.create(String.valueOf(competition.getId()))).build();
+		
+	}
+	
+	@POST
 	@Path("/join")
 	@Consumes("multipart/form-data")
 	public Response join(@FormDataParam("tid") Integer tid){
@@ -70,4 +98,21 @@ public class CompetitionResource {
 		return Response.created(URI.create(String.valueOf(competition.getId()))).build();
 		
 	}
+	
+	@POST
+	@Path("/addgame")
+	@Consumes("application/json")
+	public Response addGame(Game game){
+		
+		game.setCompetition(competition);
+		
+		game.setStatus(0);
+		
+		service.saveOrUpdateGame(game);
+		
+		return Response.created(URI.create(String.valueOf(game.getId()))).build();
+		
+	}
+	
+	
 }
