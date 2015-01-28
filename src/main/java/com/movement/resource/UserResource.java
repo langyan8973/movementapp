@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,17 @@ public class UserResource {
 	public List<User> allUsers(){
 		
 		return service.getAllUsers();
+	}
+	
+	@GET
+	@Path("{id}")
+	@Produces("application/json;charset=UTF-8")
+	public User getById(@PathParam("id") int id){
+		
+		User user = service.getById(id+"");
+		
+		return user;
+		
 	}
 	
 }

@@ -1,8 +1,11 @@
 package com.movement.resource;
 
+import java.io.InputStream;
 import java.net.URI;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +16,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +27,7 @@ import com.movement.bussiness.Competition;
 import com.movement.bussiness.CompetitionTeam;
 import com.movement.bussiness.Game;
 import com.movement.service.CompetitionService;
+import com.movement.service.FileService;
 import com.sun.jersey.api.core.ResourceContext;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -41,6 +49,9 @@ public class CompetitionResource {
 
 	@Autowired
 	private CompetitionService service;
+	
+	@Autowired
+	private FileService fileService;
 	
 	@GET
 	@Produces("application/json;charset=UTF-8")
@@ -111,6 +122,71 @@ public class CompetitionResource {
 		service.saveOrUpdateGame(game);
 		
 		return Response.created(URI.create(String.valueOf(game.getId()))).build();
+		
+	}
+	
+	@POST
+	@Path("/addimage")
+	@Consumes("multipart/form-data")
+	public Response addImg(@Context HttpServletRequest request){
+		
+		FileItemFactory fileItemFactory = new DiskFileItemFactory();
+		
+		ServletFileUpload upload = new ServletFileUpload(fileItemFactory);
+		
+		try {
+			
+			List<FileItem> fileItems = upload.parseRequest(request);
+			
+			String filename = "";
+			
+			InputStream is = null;
+			
+			Iterator<FileItem> iterator;
+			
+			for (iterator = fileItems.iterator();iterator.hasNext();) {
+				
+				FileItem item = iterator.next();
+				
+				if(item.isFormField()&&item.getFieldName().equals("filename")){
+					
+					filename = item.getString("UTF-8");
+					
+				}
+				else if(item.getName() != null && !item.getName().equals("")){
+					
+					is = item.getInputStream();
+					
+					
+				}
+				
+			}
+			
+			String fname = fileService.saveImage(filename,"competition",competition.getId().toString(), is);
+			
+			is.close();
+			
+			return Response.created(URI.create(fname))
+					.build();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+		
+		
+	}
+	
+	@POST
+	@Path("/deleteimage")
+	@Consumes("multipart/form-data")
+	public Response deleteImg(@FormDataParam("name") String name){
+		
+		fileService.deleteImage(name, "competition", competition.getId().toString());
+		
+		return Response.ok().build();
 		
 	}
 	

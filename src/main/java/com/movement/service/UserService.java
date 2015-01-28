@@ -26,6 +26,14 @@ public class UserService {
 		return dao.findByOpenID(openid, snstype);
 	}
 	
+	public User getById(String id){
+		
+		int iid = Integer.parseInt(id);
+		
+		return dao.findById(iid);
+		
+	}
+	
 	public User create(String openid, String name,String thumbnail, String accessToken, String refreshToken, long expirein, Integer snstype) {
 		User user = new User();
 		user.setName(name);

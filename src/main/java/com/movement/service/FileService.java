@@ -27,4 +27,10 @@ public class FileService {
 		
 	}
 	
+	public void deleteImage(String name,String category,String iid){
+		
+		PublicHelper.deleteImage(category, iid, name);
+		
+	}
+	
 }

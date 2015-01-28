@@ -38,6 +38,9 @@ import com.movement.util.PublicHelper;
 public class ThirdLoginResource {
 	@Autowired
 	private UserService snsService;
+	
+	@Autowired
+	private UserService service;
 //https://api.weibo.com/oauth2/authorize?client_id=3695231363&response_type=code&redirect_uri=http://127.0.0.1:8083/rest/thirdlogin/weibo
 	@GET
 	@Path("/weibo")
@@ -190,7 +193,7 @@ public class ThirdLoginResource {
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder().replacePath(
 				"rest/thirdlogin/callback");
 		URI listUri = ub.queryParam("Authorization", encry)
-				.queryParam("openid", user.getOpenid())
+				.queryParam("openid", user.getId())
 				.queryParam("access_token", user.getAccess_token())
 				.queryParam("expires_in", user.getExpires_in().getTime())
 				.queryParam("name", user.getName())
@@ -210,14 +213,12 @@ public class ThirdLoginResource {
 
 	@GET
 	@Path("/callback")
-	@Produces({ MediaType.TEXT_PLAIN })
-	public Response getCallback(@Context HttpServletRequest request) {
+	@Produces("application/json;charset=UTF-8")
+	public User getCallback(@Context HttpServletRequest request) {
 		if (!StringUtils.isEmpty(request.getParameter("openid"))) {
 			String uid = request.getParameter("openid");
-			return Response.status(Status.OK).entity(uid)
-					.type(MediaType.TEXT_PLAIN).build();
+			return service.getById(uid);
 		}
-		return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN)
-				.entity("参数错误").build();
+		return null;
 	}
 }
