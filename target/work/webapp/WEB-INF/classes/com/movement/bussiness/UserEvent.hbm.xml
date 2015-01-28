@@ -14,10 +14,19 @@
         </many-to-one>
         <many-to-one name="event" class="com.movement.bussiness.SportsEvent">
             <column name="event" />
-        </many-to-one>       
-        <property name="level" type="java.lang.Integer">
+        </many-to-one> 
+        <property name="experiencer" type="java.lang.Integer">
+            <column name="experiencer" />
+        </property> 
+        <property name="grade" type="java.lang.Integer">
+            <column name="grade" />
+        </property> 
+        <property name="reputably" type="java.lang.Integer">
+            <column name="reputably" />
+        </property>       
+        <many-to-one name="level" class="com.movement.bussiness.EventLevel">
             <column name="level" />
-        </property>  
+        </many-to-one>
         <bag name="achievements" table="achievement" inverse="true" lazy="true" fetch="select"  order-by="id desc">
             <key>
                 <column name="ueid" />

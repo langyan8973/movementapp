@@ -10,15 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.movement.bussiness.Activity;
 import com.movement.bussiness.ActivityAttachment;
+import com.movement.bussiness.EventLevel;
 import com.movement.bussiness.SportsEvent;
 import com.movement.bussiness.User;
 import com.movement.bussiness.UserActivity;
 import com.movement.bussiness.UserEvent;
 import com.movement.dao.ActivityAttachmentDao;
 import com.movement.dao.ActivityDao;
+import com.movement.dao.EventLevelDao;
 import com.movement.dao.UserActivityDao;
 import com.movement.dao.UserDao;
 import com.movement.dao.UserEventDao;
+import com.movement.util.CodeUpgradeType;
 import com.movement.util.JaxbDateSerializer;
 
 @Service
@@ -39,6 +42,9 @@ public class ActivityService {
 	
 	@Autowired
 	private ActivityAttachmentDao activityAttachmentDao;
+	
+	@Autowired
+	private EventLevelDao eventLevelDao;
 	
 	public List<Activity> getAllActivities(){
 		
@@ -106,7 +112,9 @@ public class ActivityService {
 			
 			userEvent.setUser(user);
 			
-			userEvent.setLevel(1);
+			EventLevel eventLevel = eventLevelDao.findById(1);
+			
+			userEvent.setLevel(eventLevel);
 			
 			userEvent.setStatus(0);
 			
@@ -142,7 +150,9 @@ public class ActivityService {
 			
 			userEvent.setUser(user);
 			
-			userEvent.setLevel(1);
+			EventLevel eventLevel = eventLevelDao.findById(1);
+			
+			userEvent.setLevel(eventLevel);
 			
 			userEvent.setStatus(0);
 			
@@ -198,6 +208,37 @@ public class ActivityService {
 		}
 		
 		return activity;
+		
+	}
+	
+	public void closeActivity(Activity activity){
+		
+		activity.setStatus(2);
+		
+		dao.saveOrUpdate(activity);
+		
+		List<UserActivity> userActivities = userActivityDao.getByActivity(activity);
+		
+		if(userActivities!=null && userActivities.size()>0){
+			
+			Iterator<UserActivity> iterator;
+			for (iterator = userActivities.iterator(); iterator.hasNext();) {
+				
+				UserActivity userActivity = iterator.next();
+				
+				UserEvent userEvent = userEventDao.getByUserAndEvent(userActivity.getUser(), userActivity.getActivity().getEvent());
+				
+				userEvent.setExperiencer(userEvent.getExperiencer()+CodeUpgradeType.ACTIVITY_EXPERIENCER);
+				
+				int grade = userEvent.getExperiencer()/CodeUpgradeType.EVENT_UPGRADE_UNIT;
+				
+				userEvent.setGrade(grade);
+				
+				userEventDao.saveOrUpdate(userEvent);
+				
+			}
+			
+		}
 		
 	}
 	

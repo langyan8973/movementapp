@@ -42,5 +42,6 @@
         <mapping resource="com/movement/bussiness/CompetitionTeam.hbm.xml" />
         <mapping resource="com/movement/bussiness/Site.hbm.xml" />
         <mapping resource="com/movement/bussiness/Unit.hbm.xml" />
+        <mapping resource="com/movement/bussiness/EventLevel.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

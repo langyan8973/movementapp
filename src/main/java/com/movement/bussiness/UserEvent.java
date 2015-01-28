@@ -23,7 +23,16 @@ public class UserEvent implements Serializable {
 	private SportsEvent event;
 	
 	@XmlElement
-	private Integer level;
+	private Integer experiencer;
+	
+	@XmlElement
+	private Integer grade;
+	
+	@XmlElement
+	private Integer reputably;
+	
+	@XmlElement
+	private EventLevel level;
 	
 	@XmlElement
 	private List<Achievement> achievements;
@@ -59,11 +68,11 @@ public class UserEvent implements Serializable {
 		this.event = event;
 	}
 
-	public Integer getLevel() {
+	public EventLevel getLevel() {
 		return level;
 	}
 
-	public void setLevel(Integer level) {
+	public void setLevel(EventLevel level) {
 		this.level = level;
 	}
 
@@ -81,6 +90,30 @@ public class UserEvent implements Serializable {
 
 	public void setAchievements(List<Achievement> achievements) {
 		this.achievements = achievements;
+	}
+
+	public Integer getExperiencer() {
+		return experiencer;
+	}
+
+	public void setExperiencer(Integer experiencer) {
+		this.experiencer = experiencer;
+	}
+
+	public Integer getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
+
+	public Integer getReputably() {
+		return reputably;
+	}
+
+	public void setReputably(Integer reputably) {
+		this.reputably = reputably;
 	}
 	
 }

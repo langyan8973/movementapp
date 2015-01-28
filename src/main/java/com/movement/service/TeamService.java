@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.movement.bussiness.Activity;
+import com.movement.bussiness.EventLevel;
 import com.movement.bussiness.SportsEvent;
 import com.movement.bussiness.Team;
 import com.movement.bussiness.User;
 import com.movement.bussiness.UserActivity;
 import com.movement.bussiness.UserEvent;
 import com.movement.bussiness.UserTeam;
+import com.movement.dao.EventLevelDao;
 import com.movement.dao.TeamDao;
 import com.movement.dao.UserDao;
 import com.movement.dao.UserEventDao;
@@ -35,6 +37,9 @@ public class TeamService {
 	
 	@Autowired
 	private UserTeamDao userTeamDao;
+	
+	@Autowired
+	private EventLevelDao eventLevelDao;
 	
 	public List<Team> getAllTeams(){
 		
@@ -111,7 +116,9 @@ public class TeamService {
 			
 			userEvent.setUser(user);
 			
-			userEvent.setLevel(1);
+			EventLevel eventLevel = eventLevelDao.findById(1);
+			
+			userEvent.setLevel(eventLevel);
 			
 			userEvent.setStatus(0);
 			
@@ -147,7 +154,9 @@ public class TeamService {
 			
 			userEvent.setUser(user);
 			
-			userEvent.setLevel(1);
+			EventLevel eventLevel = eventLevelDao.findById(1);
+			
+			userEvent.setLevel(eventLevel);
 			
 			userEvent.setStatus(0);
 			
