@@ -9,31 +9,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class GameRecord implements Serializable {
 
-	@XmlElement
 	private Integer id;
 	
-	@XmlTransient
 	private Game game;
 	
-	@XmlElement
 	private Team team;
 	
-	@XmlElement
-	private String player;
+	private User player;
 	
-	@XmlElement
+	private SimplifyUser contestant;
+	
 	private String score;
 	
-	@XmlTransient
+	private Integer win;
+	
 	private Integer status;
 	
 	public GameRecord(){
 		
 	}
 
+	@XmlElement
 	public Integer getId() {
 		return id;
 	}
@@ -42,6 +41,7 @@ public class GameRecord implements Serializable {
 		this.id = id;
 	}
 
+	@XmlTransient
 	public Game getGame() {
 		return game;
 	}
@@ -50,6 +50,7 @@ public class GameRecord implements Serializable {
 		this.game = game;
 	}
 
+	@XmlElement
 	public Team getTeam() {
 		return team;
 	}
@@ -58,14 +59,18 @@ public class GameRecord implements Serializable {
 		this.team = team;
 	}
 
-	public String getPlayer() {
+	@XmlTransient
+	public User getPlayer() {
 		return player;
 	}
 
-	public void setPlayer(String player) {
+	public void setPlayer(User player) {
 		this.player = player;
+		if(player!=null)
+			this.contestant = new SimplifyUser(player);
 	}
 
+	@XmlElement
 	public String getScore() {
 		return score;
 	}
@@ -74,12 +79,32 @@ public class GameRecord implements Serializable {
 		this.score = score;
 	}
 
+	@XmlTransient
 	public Integer getStatus() {
 		return status;
 	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	@XmlElement
+	public Integer getWin() {
+		return win;
+	}
+
+	public void setWin(Integer win) {
+		this.win = win;
+	}
+
+	public SimplifyUser getContestant() {
+		return contestant;
+	}
+
+	public void setContestant(SimplifyUser contestant) {
+		this.contestant = contestant;
+		if(contestant!=null)
+			this.player = new User(contestant);
 	}
 	
 }

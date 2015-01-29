@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -72,6 +73,17 @@ public class CompetitionResource {
 		
 	}
 	
+	@Path("/players")
+	public CompetitionUsersResource getPlayers(){
+		
+		CompetitionUsersResource resource = resourceContext.getResource(CompetitionUsersResource.class);
+		
+		resource.setCompetition(competition);
+		
+		return resource;
+		
+	}
+	
 	@POST
 	@Path("/edit")
 	@Consumes("application/json")
@@ -105,6 +117,17 @@ public class CompetitionResource {
 	public Response join(@FormDataParam("tid") Integer tid){
 		
 		service.JoinCompetition(tid, competition);
+		
+		return Response.created(URI.create(String.valueOf(competition.getId()))).build();
+		
+	}
+	
+	@POST
+	@Path("/playerjoin")
+	@Consumes("multipart/form-data")
+	public Response playerjoin(@FormDataParam("uid") Integer uid){
+		
+		service.playerJoin(uid, competition);
 		
 		return Response.created(URI.create(String.valueOf(competition.getId()))).build();
 		
@@ -185,6 +208,16 @@ public class CompetitionResource {
 	public Response deleteImg(@FormDataParam("name") String name){
 		
 		fileService.deleteImage(name, "competition", competition.getId().toString());
+		
+		return Response.ok().build();
+		
+	}
+	
+	@PUT
+	@Path("/close")
+	public Response close(){
+		
+		service.closeCompetition(competition);
 		
 		return Response.ok().build();
 		

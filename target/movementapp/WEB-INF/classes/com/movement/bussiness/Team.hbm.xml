@@ -36,6 +36,12 @@
             </key>
             <one-to-many class="com.movement.bussiness.TeamAttachment" />
         </bag> 
+        <property name="game_played" type="java.lang.Integer">
+            <column name="game_played" />
+        </property>
+        <property name="win_count" type="java.lang.Integer">
+            <column name="win_count" />
+        </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>

@@ -37,6 +37,10 @@ public class Team implements Serializable {
 	
 	private List<TeamAttachment> attachments;
 	
+	private Integer game_played;
+	
+	private Integer win_count;
+
 	private Integer status;
 	
 	public Team(){}
@@ -141,6 +145,22 @@ public class Team implements Serializable {
 		this.attachments = attachments;
 	}
 	
-	
+	@XmlElement
+	public Integer getGame_played() {
+		return game_played;
+	}
+
+	public void setGame_played(Integer game_played) {
+		this.game_played = game_played;
+	}
+
+	@XmlElement
+	public Integer getWin_count() {
+		return win_count;
+	}
+
+	public void setWin_count(Integer win_count) {
+		this.win_count = win_count;
+	}
 
 }

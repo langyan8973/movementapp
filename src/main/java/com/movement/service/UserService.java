@@ -5,8 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.movement.bussiness.SportsEvent;
 import com.movement.bussiness.User;
+import com.movement.bussiness.UserEvent;
+import com.movement.dao.SportsEventDao;
 import com.movement.dao.UserDao;
+import com.movement.dao.UserEventDao;
 
 @Service
 @Transactional
@@ -14,6 +19,12 @@ public class UserService {
 
 	@Autowired
 	private UserDao dao;
+	
+	@Autowired
+	private SportsEventDao sportsEventDao;
+	
+	@Autowired
+	private UserEventDao userEventDao;
 	
 	public List<User> getAllUsers(){
 		
@@ -56,5 +67,21 @@ public class UserService {
 		user.setRefreshtoken(refreshToken);
 		user.setExpires_in(new java.util.Date(System.currentTimeMillis() + (long)expirein*1000));
 		dao.saveOrUpdate(user);
+	}
+	
+	public UserEvent reputably(Integer uid,Integer eid){
+		
+		User user = dao.findById(uid);
+		
+		SportsEvent event = sportsEventDao.findById(eid);
+		
+		UserEvent userEvent = userEventDao.getByUserAndEvent(user, event);
+		
+		userEvent.setReputably(userEvent.getReputably()+1);
+		
+		userEventDao.saveOrUpdate(userEvent);
+		
+		return userEvent;
+		
 	}
 }

@@ -15,14 +15,17 @@
         <many-to-one name="team" class="com.movement.bussiness.Team">
             <column name="team" />
         </many-to-one> 
-        <property name="player" type="string">
-            <column name="player" length="45"/>
-        </property>
+        <many-to-one name="player" class="com.movement.bussiness.Team">
+            <column name="player" />
+        </many-to-one>
         <property name="score" type="string">
             <column name="score" length="45"/>
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
+        </property>
+        <property name="win" type="java.lang.Integer">
+            <column name="win" />
         </property>
     </class>
 </hibernate-mapping>
