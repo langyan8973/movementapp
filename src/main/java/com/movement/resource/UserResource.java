@@ -43,6 +43,18 @@ public class UserResource {
 	}
 	
 	@POST
+	@Path("/getbyopenid")
+	@Consumes("multipart/form-data")
+	@Produces("application/json;charset=UTF-8")
+	public User getByOpenid(@FormDataParam("openid") String openid,@FormDataParam("snstype") Integer snstype){
+		
+		User user = service.getByOpenid(openid, snstype);
+		
+		return user;
+		
+	}
+	
+	@POST
 	@Path("/reputably")
 	@Consumes("multipart/form-data")
 	@Produces("application/json;charset=UTF-8")

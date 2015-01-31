@@ -191,7 +191,7 @@ public class ThirdLoginResource {
 
 		// TODO 这里以后需要更正
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder().replacePath(
-				"rest/thirdlogin/callback");
+				"movementapp/rest/thirdlogin/callback");
 		URI listUri = ub.queryParam("Authorization", encry)
 				.queryParam("openid", user.getId())
 				.queryParam("access_token", user.getAccess_token())
