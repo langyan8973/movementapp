@@ -2,12 +2,17 @@ package com.movement.resource;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,9 +49,11 @@ public class UserResource {
 	
 	@POST
 	@Path("/getbyopenid")
-	@Consumes("multipart/form-data")
+	@Consumes("application/x-www-form-urlencoded")
 	@Produces("application/json;charset=UTF-8")
-	public User getByOpenid(@FormDataParam("openid") String openid,@FormDataParam("snstype") Integer snstype){
+	public User getByOpenid(@FormParam("openid") String openid,@FormParam("snstype") int snstype,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		User user = service.getByOpenid(openid, snstype);
 		
@@ -56,9 +63,11 @@ public class UserResource {
 	
 	@POST
 	@Path("/reputably")
-	@Consumes("multipart/form-data")
+	@Consumes("application/x-www-form-urlencoded")
 	@Produces("application/json;charset=UTF-8")
-	public UserEvent reputably(@FormDataParam("uid") Integer uid,@FormDataParam("eid") Integer eid){
+	public UserEvent reputably(@FormParam("uid") int uid,@FormParam("eid") int eid,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		UserEvent userEvent = service.reputably(uid, eid);
 		

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -15,6 +16,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -58,8 +61,10 @@ public class TeamResource {
 	
 	@POST
 	@Path("/join")
-	@Consumes("multipart/form-data")
-	public Response create(@FormDataParam("uid") Integer uid){
+	@Consumes("application/x-www-form-urlencoded")
+	public Response create(@FormParam("uid") Integer uid,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		service.joinTeam(uid, team);
 		
@@ -163,8 +168,10 @@ public class TeamResource {
 	
 	@POST
 	@Path("/deleteimage")
-	@Consumes("multipart/form-data")
-	public Response deleteImg(@FormDataParam("name") String name){
+	@Consumes("application/x-www-form-urlencoded")
+	public Response deleteImg(@FormParam("name") String name,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		fileService.deleteImage(name, "team", team.getId().toString());
 		

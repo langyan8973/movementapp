@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -113,8 +115,10 @@ public class CompetitionResource {
 	
 	@POST
 	@Path("/join")
-	@Consumes("multipart/form-data")
-	public Response join(@FormDataParam("tid") Integer tid){
+	@Consumes("application/x-www-form-urlencoded")
+	public Response join(@FormParam("tid") Integer tid,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		service.JoinCompetition(tid, competition);
 		
@@ -124,8 +128,10 @@ public class CompetitionResource {
 	
 	@POST
 	@Path("/playerjoin")
-	@Consumes("multipart/form-data")
-	public Response playerjoin(@FormDataParam("uid") Integer uid){
+	@Consumes("application/x-www-form-urlencoded")
+	public Response playerjoin(@FormParam("uid") Integer uid,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		service.playerJoin(uid, competition);
 		
@@ -204,8 +210,10 @@ public class CompetitionResource {
 	
 	@POST
 	@Path("/deleteimage")
-	@Consumes("multipart/form-data")
-	public Response deleteImg(@FormDataParam("name") String name){
+	@Consumes("application/x-www-form-urlencoded")
+	public Response deleteImg(@FormParam("name") String name,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		fileService.deleteImage(name, "competition", competition.getId().toString());
 		

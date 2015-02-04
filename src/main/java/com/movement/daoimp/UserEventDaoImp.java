@@ -1,6 +1,9 @@
 package com.movement.daoimp;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +24,18 @@ public class UserEventDaoImp extends GenericDAOImp﻿<UserEvent, Integer> implem
 		crit.setCacheable(true);
 		
 		return (UserEvent)crit.uniqueResult();
+	}
+
+	@Override
+	public List<UserEvent> getByEvents(SportsEvent event) {
+		
+		Criteria crit = getSession().createCriteria(UserEvent.class);
+		crit.addOrder(Order.desc("level.id"));
+		crit = crit.add(Restrictions.eq("event.id", event.getId()));
+		crit.setMaxResults(100);
+		crit.setCacheable(true);
+		
+		return (List<UserEvent>)crit.list();
 	}
 
 }

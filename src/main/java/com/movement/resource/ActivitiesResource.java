@@ -4,8 +4,10 @@ import java.net.URI;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,6 +15,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,12 +55,14 @@ public class ActivitiesResource {
 	}
 	
 	@POST
-	@Consumes("multipart/form-data")
-	public Response create(@FormDataParam("title") String title,
-			@FormDataParam("content") String content,
-			@FormDataParam("time") String time,
-			@FormDataParam("address") String address,
-			@FormDataParam("uid") Integer uid){
+	@Consumes("application/x-www-form-urlencoded")
+	public Response create(@FormParam("title") String title,
+			@FormParam("content") String content,
+			@FormParam("time") String time,
+			@FormParam("address") String address,
+			@FormParam("uid") Integer uid,@Context UriInfo uriInfo,
+			@Context HttpServletRequest request,
+			@Context SecurityContext securityContext){
 		
 		Activity activity = service.create(title, content, time, address, uid, event);
 		
