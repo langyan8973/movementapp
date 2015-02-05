@@ -15,6 +15,9 @@
         <property name="description" type="string">
             <column name="description" length="256" />
         </property>
+        <property name="icon" type="string">
+            <column name="icon" length="100" />
+        </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>

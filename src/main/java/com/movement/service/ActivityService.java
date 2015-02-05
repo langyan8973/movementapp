@@ -53,6 +53,18 @@ public class ActivityService {
 		return activities;
 	}
 	
+	public List<Activity> findAround(double x, double y, double distance,
+			SportsEvent event) {
+		double KmPerDegree = 111.12000071117;
+
+		double dis = distance / 1000 / KmPerDegree;
+		double xmin = x - dis;
+		double xmax = x + dis;
+		double ymin = y - dis;
+		double ymax = y + dis;
+		return dao.findByExtent(xmin, xmax, ymin, ymax, event);
+	}
+	
 	public List<Activity> getActivitiesByevent(SportsEvent event){
 		List<Activity> activities = dao.getByEvent(event);
 		
@@ -72,7 +84,7 @@ public class ActivityService {
 	}
 	
 	public Activity create(String title,String content,
-			String time,String address,Integer uid,SportsEvent event){
+			String time,String address,Integer uid,Double x,Double y,SportsEvent event){
 		
 		Activity activity = new Activity();
 		
@@ -91,6 +103,10 @@ public class ActivityService {
 		}
 		
 		activity.setAddress(address);
+		
+		activity.setX(x);
+		
+		activity.setY(y);
 		
 		activity.setEvent(event);
 		

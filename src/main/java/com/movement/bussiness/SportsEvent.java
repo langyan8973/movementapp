@@ -21,6 +21,9 @@ public class SportsEvent implements Serializable {
 	@XmlElement
 	private String description;
 	
+	@XmlElement
+	private String icon;
+	
 	@XmlTransient
 	private Integer status;
 	
@@ -56,6 +59,14 @@ public class SportsEvent implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	
 	

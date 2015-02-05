@@ -13,7 +13,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
@@ -54,17 +56,31 @@ public class ActivitiesResource {
 		
 	}
 	
+	@Path("/around")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Activity> findAround(@QueryParam("x") double x,
+			@QueryParam("y") double y, @QueryParam("distance") double distance){
+		
+		return service.findAround(x, y, distance, event);
+		
+		
+	}
+	
+	
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	public Response create(@FormParam("title") String title,
 			@FormParam("content") String content,
 			@FormParam("time") String time,
 			@FormParam("address") String address,
+			@FormParam("x") Double x,
+			@FormParam("y") Double y,
 			@FormParam("uid") Integer uid,@Context UriInfo uriInfo,
 			@Context HttpServletRequest request,
 			@Context SecurityContext securityContext){
 		
-		Activity activity = service.create(title, content, time, address, uid, event);
+		Activity activity = service.create(title, content, time, address, uid, x,y,event);
 		
 		return Response.created(URI.create(String.valueOf(activity.getId()))).build();
 		
