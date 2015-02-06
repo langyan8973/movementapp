@@ -48,13 +48,7 @@
         <property name="refreshtoken" type="string">
             <column name="refresh_token" length="128" />
         </property>
-        
-        <bag name="events" table="user_event" inverse="true" lazy="true" fetch="select"  order-by="id desc">
-            <key>
-                <column name="user" />
-            </key>
-            <one-to-many class="com.movement.bussiness.UserEvent" />
-        </bag>
+
         <bag name="activities" table="user_activity" inverse="true" lazy="true" fetch="select"  order-by="id desc">
             <key>
                 <column name="user" />

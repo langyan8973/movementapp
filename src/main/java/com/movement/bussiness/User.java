@@ -41,8 +41,6 @@ public class User implements Serializable {
 	
 	private String thumbnail;
 	
-	private List<UserEvent> events;
-	
 	private List<UserActivity> activities;
 	
 	private List<UserTeam> teams;
@@ -192,15 +190,6 @@ public class User implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	@XmlElement
-	public List<UserEvent> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<UserEvent> events) {
-		this.events = events;
 	}
 
 	@XmlElement

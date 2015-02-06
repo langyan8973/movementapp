@@ -84,4 +84,14 @@ public class UserService {
 		return userEvent;
 		
 	}
+	
+	public List<UserEvent> getUserEventsByUid(int uid){
+		
+		User user = dao.findById(uid);
+		
+		List<UserEvent> userEvents = userEventDao.getByUser(user);
+		
+		return userEvents;
+		
+	}
 }

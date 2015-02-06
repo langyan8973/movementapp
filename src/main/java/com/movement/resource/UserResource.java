@@ -75,4 +75,15 @@ public class UserResource {
 		
 	}
 	
+	@GET
+	@Path("{id}/events")
+	@Produces("application/json;charset=UTF-8")
+	public List<UserEvent> getEvents(@PathParam("id") int id){
+		
+		User user = service.getById(id+"");
+		
+		return service.getUserEventsByUid(id);
+		
+	}
+	
 }

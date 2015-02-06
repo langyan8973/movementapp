@@ -16,7 +16,7 @@ public class UserEvent implements Serializable {
 	@XmlElement
 	private Integer id;
 	
-	@XmlTransient
+	@XmlElement
 	private User user;
 	
 	@XmlElement

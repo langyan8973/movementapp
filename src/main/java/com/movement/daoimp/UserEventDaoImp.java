@@ -38,4 +38,14 @@ public class UserEventDaoImp extends GenericDAOImp﻿<UserEvent, Integer> implem
 		return (List<UserEvent>)crit.list();
 	}
 
+	@Override
+	public List<UserEvent> getByUser(User user) {
+		
+		Criteria crit = getSession().createCriteria(UserEvent.class);
+		crit = crit.add(Restrictions.eq("user.id", user.getId()));
+		crit.setCacheable(true);
+		
+		return (List<UserEvent>)crit.list();
+	}
+
 }
