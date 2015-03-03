@@ -41,6 +41,8 @@ public class Activity implements Serializable {
 	
 	private Double y;
 	
+	private Integer number;
+	
 	public Activity(){
 		
 	}
@@ -137,6 +139,7 @@ public class Activity implements Serializable {
 		this.initiator = new User(constitutor);
 	}
 
+	@XmlElement
 	public Double getX() {
 		return x;
 	}
@@ -145,12 +148,22 @@ public class Activity implements Serializable {
 		this.x = x;
 	}
 
+	@XmlElement
 	public Double getY() {
 		return y;
 	}
 
 	public void setY(Double y) {
 		this.y = y;
+	}
+
+	@XmlElement
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 }
